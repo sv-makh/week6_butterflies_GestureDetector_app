@@ -52,7 +52,7 @@ class _ButterfliesListState extends State<ButterfliesList> {
   @override
   Widget build(BuildContext context) {
     return Column(
-        //mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             height: 100.0,
@@ -63,36 +63,37 @@ class _ButterfliesListState extends State<ButterfliesList> {
                 itemExtent: 200.0,
                 itemCount: _butterflies.length,
                 itemBuilder: ((BuildContext context, int index) {
-                  return ListTile(
-                    //уменьшить расстояние между title и leading
-                    title: Transform.translate(
-                      child: Text(
-                        _butterflies[index],
-                        style: const TextStyle(fontSize: 14.0),
-                      ),
-                      offset: const Offset(-15, 0),
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      side: BorderSide(
+                        width: 3.0,
+                        //у выбранного элемента цвет границы lightBlue, у остальных black26
+                        color: index == _selectedIndex
+                            ? Colors.lightBlue
+                            : Colors.black26),
+                    ),
+                    color: Colors.black12,
+                    child:ListTile(
+                      //уменьшить расстояние между title и leading
+                      title: Transform.translate(
+                        child: Text(
+                          _butterflies[index],
+                          style: const TextStyle(fontSize: 14.0),
+                        ),
+                        offset: const Offset(-15, 0),
                     ),
                     //unicode бабочка
                     leading: const Text(
                       "\u{1F98B}",
                       style: TextStyle(fontSize: 20.0),
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide(
-                          width: 3.0,
-                          //у выбранного элемента цвет границы lightBlue, у остальных black26
-                          color: index == _selectedIndex
-                              ? Colors.lightBlue
-                              : Colors.black26),
-                    ),
-                    tileColor: Colors.black12,
                     onTap: () {
                       setState(() {
                         _selectedIndex = index;
                       });
                     },
-                  );
+                  ));
                 })),
           ),
           //пространство между списком бабочек и описанием
