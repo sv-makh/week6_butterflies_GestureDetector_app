@@ -56,11 +56,14 @@ class _ButterfliesListState extends State<ButterfliesList> {
         children: [
           Container(
             height: 100.0,
-            child: ListView.builder(
+            child: ListView.separated(
                 padding: const EdgeInsets.all(20.0),
                 scrollDirection: Axis.horizontal,
-                //ширина элемента списка
-                itemExtent: 200.0,
+                separatorBuilder: (BuildContext context, int index) =>
+                const SizedBox(
+                  height: 100.0,
+                  width: 10.0,
+                ),
                 itemCount: _butterflies.length,
                 itemBuilder: _createListViewGestDet
             ),
