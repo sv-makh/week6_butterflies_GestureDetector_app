@@ -62,39 +62,8 @@ class _ButterfliesListState extends State<ButterfliesList> {
                 //ширина элемента списка
                 itemExtent: 200.0,
                 itemCount: _butterflies.length,
-                itemBuilder: ((BuildContext context, int index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide(
-                        width: 3.0,
-                        //у выбранного элемента цвет границы lightBlue, у остальных black26
-                        color: index == _selectedIndex
-                            ? Colors.lightBlue
-                            : Colors.black26),
-                    ),
-                    color: Colors.black12,
-                    child:ListTile(
-                      //уменьшить расстояние между title и leading
-                      title: Transform.translate(
-                        child: Text(
-                          _butterflies[index],
-                          style: const TextStyle(fontSize: 14.0),
-                        ),
-                        offset: const Offset(-15, 0),
-                    ),
-                    //unicode бабочка
-                    leading: const Text(
-                      "\u{1F98B}",
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    onTap: () {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
-                    },
-                  ));
-                })),
+                itemBuilder: _createListViewGestDet
+            ),
           ),
           //пространство между списком бабочек и описанием
           const SizedBox(height: 50),
@@ -108,5 +77,31 @@ class _ButterfliesListState extends State<ButterfliesList> {
             ),
           ),
         ]);
+  }
+
+  Widget _createListViewGestDet(BuildContext context, int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      child: Container(
+        child: Center(child: Text("\u{1F98B}"+_butterflies[index],
+          style: const TextStyle(fontSize: 14.0),),),
+        height: 100.0,
+        width: 200.0,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          border: Border.all(
+            color: index == _selectedIndex
+                  ? Colors.lightBlue
+                  : Colors.black26,
+            width: 3.0,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+        ),
+      ),
+    );
   }
 }
